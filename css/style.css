@@ -1,0 +1,52 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  min-height: 100vh;
+}
+
+#game {
+  display: inline-block;
+  border: 2px solid #999;
+}
+
+.field {
+  float: left;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #fff;
+}
+
+.field[data-game="food"] {
+  background-color: green;
+}
+
+.field[data-game="snake"] {
+  background-color: #00a6ff;
+}
+
+.field[data-game="wall"] {
+  background-color: #646464;
+}
+
+.row-start {
+  clear: both;
+}
+/*# sourceMappingURL=style.css.map */
