@@ -66,6 +66,7 @@ class Snake extends Element{
 
     setDirection(direction) {
         switch(direction) {
+            // TODO: Убрать в змейке cases и оставить только проверку. Передавать новую direction
             case 'ArrowRight':
             case 'right':
                 if(this.direction !== 'left') {

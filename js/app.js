@@ -12,10 +12,10 @@ window.onload = function (e) {
     (new Food(matrix)).randomShow();
 
     (new Wall(matrix, [[5, 2]], 5, 'down')).show();
-    (new Wall(matrix, [[17, 10]], 5, 'down')).show();
+    (new Wall(matrix, [[17, 11]], 5, 'down')).show();
 
 
-    let snake = new Snake(matrix, [[10,10], [10,11], [10,12]], 'right');
+    let snake = new Snake(matrix, [[3,10], [2,10], [1,10]], 'right');
     snake.show();
 
     // Mobile device controls
