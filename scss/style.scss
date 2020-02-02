@@ -1,19 +1,117 @@
-* {
+@import url('https://fonts.googleapis.com/css?family=Orbitron:400,700&display=swap');
+
+// 12 column grid
+@import 'partials/smart-grid';
+// Normalize
+@include reset();
+
+//Vars
+$white: #fff;
+$black: #4C4C54;
+
+// Base
+*,
+*:before,
+*:after {
     box-sizing: border-box;
-    padding: 0;
-    margin: 0;
 }
+
+*:focus {
+    outline: none;
+}
+
+iframe,
+figure {
+    max-width: 100%;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    box-sizing: border-box;
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
 body {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+
+    font-size: 1.6rem;
+    font-family: 'Orbitron', sans-serif;
+    color: rgb(20, 20, 20);
 }
 
+.container {
+    @include wrapper();
+}
+
+.container-full {
+    @include wrapper-full();
+}
+
+/////////
 #game {
     display: inline-block;
     border: 2px solid #999;
+}
+
+#game-info {
+    margin-top: 10px;
+    .info {
+        margin-bottom: 10px;
+    }
+}
+
+#controls {
+    display: none;
+    align-items: center;
+
+    @include sm-block() {
+        display: flex;
+    }
+
+    .left,
+    .right,
+    .up,
+    .down {
+        width: 5rem;
+        height: 5rem;
+        display: flex;
+        justify-content: center;
+        vertical-align: center;
+        &::before {
+            content: '';
+            padding: 1rem;
+            background: url('../img/right.svg') center / contain no-repeat;
+            display: inline-block;
+        }
+    }
+    .left {
+        &::before {
+            transform:scaleX(-1);
+        }
+    }
+    .up {
+        margin: 1rem;
+        &::before {
+            transform: rotate(-90deg);
+        }
+    }
+    .down {
+        margin: 1rem;
+        &::before {
+            transform: rotate(90deg);
+        }
+    }
 }
 
 .field {
@@ -29,6 +127,10 @@ body {
     }
     &[data-game="wall"] {
         background-color: rgb(100, 100, 100);
+    }
+    @include xs-block() {
+        width: 1.7rem;
+        height: 1.7rem;
     }
 }
 .row-start {

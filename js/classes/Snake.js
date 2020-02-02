@@ -3,6 +3,7 @@ class Snake extends Element{
         super(matrix, cords);
         this.value = 'snake'
         this.direction = direction;
+        this.newDirection = direction;
         this.alive = true; 
         this.meal = false;
     }
@@ -11,6 +12,8 @@ class Snake extends Element{
         if(!this.alive) {
             return;
         }
+
+        this.direction = this.newDirection;
 
         let head = this.cords[0].slice();
         
@@ -59,5 +62,34 @@ class Snake extends Element{
     _checkAlive(head) {
         return head[0] >= 1 && head[0] <= this.matrix.length &&
                 head[1] >= 1 && head[1] <=this.matrix.length;
+    }
+
+    setDirection(direction) {
+        switch(direction) {
+            case 'ArrowRight':
+            case 'right':
+                if(this.direction !== 'left') {
+                    this.newDirection = 'right';
+                }
+                break;
+            case 'ArrowLeft':
+            case 'left':
+                if(this.direction !== 'right') {
+                    this.newDirection = 'left';
+                }
+                break;
+            case 'ArrowUp':
+            case 'up':
+                if(this.direction !== 'down') {
+                    this.newDirection = 'up';
+                }
+                break;
+            case 'ArrowDown':
+            case 'down':
+                if(this.direction !== 'up') {
+                    this.newDirection = 'down';
+                }
+                break;
+        }
     }
 }

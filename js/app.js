@@ -2,39 +2,33 @@
 
 window.onload = function (e) {
     let gameCanvas = document.querySelector('#game');
+    let scoreSpan = document.querySelector('#game-info .score');
+    
+    let score = 0;
+
     let matrix = new Matrix(gameCanvas, 20);
     matrix.create();
 
-    for (let i = 0; i < 5; i++) {
-        (new Food(matrix)).randomShow();
-    }
-   
+    (new Food(matrix)).randomShow();
 
+    (new Wall(matrix, [[5, 2]], 5, 'down')).show();
+    (new Wall(matrix, [[17, 10]], 5, 'down')).show();
 
-    (new Wall(matrix, [[7,1], [7,2], [7,3], [7,4]])).show();
 
     let snake = new Snake(matrix, [[10,10], [10,11], [10,12]], 'right');
     snake.show();
 
+    // Mobile device controls
+    let controls = document.querySelectorAll('#controls button');
+    for(let control of controls) {
+        control.addEventListener('click', function (e) {    
+            snake.setDirection(this.className);
+        });
+    }
+    
+    // Keyboard controls
     document.addEventListener('keydown', function(e) {
-
-        /*
-        * Защита от смены курса змеи
-        */
-        switch(e.key) {
-            case 'ArrowRight':
-                snake.direction = 'right';
-                break;
-            case 'ArrowLeft':
-                snake.direction = 'left';
-                break;
-            case 'ArrowUp':
-                snake.direction = 'up';
-                break;
-            case 'ArrowDown':
-                snake.direction = 'down';
-                break;
-        }
+        snake.setDirection(e.key);
     });
 
     let timer = setInterval(() => {
@@ -45,13 +39,11 @@ window.onload = function (e) {
             this.alert('game over');
         }
 
-        /*
-        * Создать новый фрукт если змея съела старый
-        */
-       if(snake.meal) {
-        (new Food(matrix)).randomShow();
-        snake.meal = false;
-       }
+        if(snake.meal) {
+            scoreSpan.innerHTML =  ++score;
+            (new Food(matrix)).randomShow();
+            snake.meal = false;
+        }
     }, 200);
 }
 
