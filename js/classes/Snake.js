@@ -61,36 +61,30 @@ class Snake extends Element{
 
     _checkAlive(head) {
         return head[0] >= 1 && head[0] <= this.matrix.length &&
-                head[1] >= 1 && head[1] <=this.matrix.length;
+                head[1] >= 1 && head[1] <= this.matrix.length;
+    }
+
+    destroy() {
+        this.cords.forEach(cord => {
+            this.matrix.setCell(cord[0], cord[1], '');
+        });
     }
 
     setDirection(direction) {
-        switch(direction) {
-            // TODO: Убрать в змейке cases и оставить только проверку. Передавать новую direction
-            case 'ArrowRight':
-            case 'right':
-                if(this.direction !== 'left') {
-                    this.newDirection = 'right';
-                }
-                break;
-            case 'ArrowLeft':
-            case 'left':
-                if(this.direction !== 'right') {
-                    this.newDirection = 'left';
-                }
-                break;
-            case 'ArrowUp':
-            case 'up':
-                if(this.direction !== 'down') {
-                    this.newDirection = 'up';
-                }
-                break;
-            case 'ArrowDown':
-            case 'down':
-                if(this.direction !== 'up') {
-                    this.newDirection = 'down';
-                }
-                break;
+        if(this.direction !== 'left' && direction == 'right') {
+            this.newDirection = 'right';
+        }
+
+        else if(this.direction !== 'right' && direction == 'left') {
+            this.newDirection = 'left';
+        }
+
+        else if(this.direction !== 'down' && direction == 'up') {
+            this.newDirection = 'up';
+        }
+
+        else if(this.direction !== 'up' && direction == 'down') {
+            this.newDirection = 'down';
         }
     }
 }

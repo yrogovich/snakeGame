@@ -7,7 +7,6 @@ class Matrix {
 
     create() {
         let matrixCellsLength = this.length * this.length;
-        // this.element.style.maxWidth = `${20 * this.length}px`;
         
         for (let i = 0; i < matrixCellsLength; i++) {
             let div = document.createElement('div');
