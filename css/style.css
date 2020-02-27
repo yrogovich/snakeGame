@@ -106,6 +106,7 @@ body {
   font-size: 1.6rem;
   font-family: 'Orbitron', sans-serif;
   color: #141414;
+  overflow: hidden;
 }
 
 .container {

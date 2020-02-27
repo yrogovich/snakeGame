@@ -4,7 +4,7 @@ window.onload = function(e) {
     // Globals
     let gameCanvas = document.querySelector('#game');
     let gameScreen = document.querySelector('#game-screen');
-    let gameSpeed = 100; 
+    let gameSpeed = 150; 
 
     //Score counter
     let scoreSpan = document.querySelector('#game-info .score');
@@ -40,28 +40,13 @@ window.onload = function(e) {
     let snake = new Snake(matrix, [[3,10], [2,10], [1,10]], 'right');
     snake.show();
 
-    // Mobile device controls
-    let controls = document.querySelectorAll('#game-controls button');
-    for(let control of controls) {
-        control.addEventListener('click', function (e) {  
-            let direction;
-            switch(this.className) {
-                case 'right':
-                    direction = 'right';
-                    break;
-                case 'left':
-                    direction = 'left';
-                    break;
-                case 'up':
-                    direction = 'up';
-                    break;
-                case 'down':
-                    direction = 'down';
-                    break;
-            }  
-            snake.setDirection(direction);
-        });
-    }
+    // Swipe controls
+    var swiper = new Swipe(document.querySelector('body'));
+        swiper.onLeft(() => snake.setDirection('left'));
+        swiper.onRight(() => snake.setDirection('right'));
+        swiper.onUp(() => snake.setDirection('up'));
+        swiper.onDown(() => snake.setDirection('down'));
+        swiper.run();
     
     // Keyboard controls
     document.addEventListener('keydown', function(e) {
