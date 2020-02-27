@@ -193,27 +193,37 @@ body {
   margin-bottom: 10px;
 }
 
-#controls {
+#game-controls {
   display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  z-index: 1;
 }
 
 @media screen and (max-width: 780px) {
-  #controls {
+  #game-controls {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
   }
 }
 
-#controls .left,
-#controls .right,
-#controls .up,
-#controls .down {
-  width: 5rem;
-  height: 5rem;
+#game-controls .left,
+#game-controls .right,
+#game-controls .up,
+#game-controls .down {
+  position: absolute;
+  width: 50%;
+  height: 33%;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -221,39 +231,24 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   vertical-align: center;
+  background: none;
+  border: none;
 }
 
-#controls .left::before,
-#controls .right::before,
-#controls .up::before,
-#controls .down::before {
-  content: '';
-  padding: 1rem;
-  background: url("../img/right.svg") center/contain no-repeat;
-  display: inline-block;
+#game-controls .right {
+  right: 0;
 }
 
-#controls .left::before {
-  -webkit-transform: scaleX(-1);
-          transform: scaleX(-1);
+#game-controls .left {
+  left: 0;
 }
 
-#controls .up {
-  margin: 1rem;
+#game-controls .up {
+  top: 0;
 }
 
-#controls .up::before {
-  -webkit-transform: rotate(-90deg);
-          transform: rotate(-90deg);
-}
-
-#controls .down {
-  margin: 1rem;
-}
-
-#controls .down::before {
-  -webkit-transform: rotate(90deg);
-          transform: rotate(90deg);
+#game-controls .down {
+  bottom: 0;
 }
 
 .field {

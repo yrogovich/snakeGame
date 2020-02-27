@@ -41,7 +41,7 @@ window.onload = function(e) {
     snake.show();
 
     // Mobile device controls
-    let controls = document.querySelectorAll('#controls button');
+    let controls = document.querySelectorAll('#game-controls button');
     for(let control of controls) {
         control.addEventListener('click', function (e) {  
             let direction;
