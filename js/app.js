@@ -8,7 +8,7 @@ window.onload = function(e) {
     let snake;
 
     let scoreSpan = document.querySelector('#game-info .score');
-    // let score = 0;
+    let score = 0;
 
     let matrix = new Matrix(gameCanvas, 20);
 
@@ -88,10 +88,17 @@ window.onload = function(e) {
         (new Food(matrix)).randomShow();
 
         //Create walls
-        (new Wall(matrix, [1, 1], 6, 'down')).show();
-        (new Wall(matrix, [20, 20], 6, 'up')).show();
+        (new Wall(matrix, [6, 8], 5, 'down')).show();
+        (new Wall(matrix, [14, 8], 5, 'down')).show();
+        (new Wall(matrix, [8, 6], 5, 'right')).show();
+        (new Wall(matrix, [8, 14], 5, 'right')).show();
+        (new Wall(matrix, [10, 10])).show();
+        (new Wall(matrix, [3, 3], 2, 'right')).show();
+        (new Wall(matrix, [18, 3], 2, 'left')).show();
+        (new Wall(matrix, [3, 18], 2, 'right')).show();
+        (new Wall(matrix, [18, 18], 2, 'left')).show();
 
-        snake = new Snake(matrix, [10, 10], 3, 'right');
+        snake = new Snake(matrix, [1, 1], 3, 'right');
         snake.show();
     }
 
