@@ -20,6 +20,17 @@ class Matrix {
             this.element.appendChild(div);
             this.cells[i] = '';
         }
+
+        return this;
+    }
+
+    destroy() {
+        this.cells = [];
+        this.element.querySelectorAll('.field').forEach(field => {
+            field.remove();
+        }); 
+        
+        return this;
     }
 
     getCell(x, y) {
@@ -31,6 +42,8 @@ class Matrix {
         let num = this._calcCellCords(x, y);
         this.cells[num] = value;
         this.element.children[num].setAttribute('data-game', value);
+
+        return this;
     }
 
     _calcCellCords(x, y) {

@@ -1,6 +1,7 @@
 class Screen {
-    constructor(screen, text, buttons) {
-        this.screen = screen;
+    constructor(gameWrapper, text, buttons) {
+        this.gameWrapper = gameWrapper;
+        this.screen;
         this.text = text;
         this.buttons = buttons;
         this.isShowed;
@@ -9,16 +10,20 @@ class Screen {
     }
 
     create() {
+        this.screen = document.createElement('div');
+        this.screen.classList.add('game-screen');
+        this.gameWrapper.append(this.screen);
+
         let label = document.createElement('div'); 
         label.classList.add("title");
         label.textContent = this.text;
-
         this.screen.append(label);
 
         if(!this.buttons) {
             return;
         }
         else if (Array.isArray(this.buttons)) {
+            // TODO: TRY FOR OF
             this.buttons.forEach(button => {this.screen.append(button)});
         }
         else {

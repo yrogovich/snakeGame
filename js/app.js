@@ -2,43 +2,29 @@
 
 window.onload = function(e) {
     // Globals
+    let gameWrapper =  document.querySelector('#game-wrapper');
     let gameCanvas = document.querySelector('#game');
-    let gameScreen = document.querySelector('#game-screen');
-    let gameSpeed = 150; 
+    let gameSpeed = 200; 
+    let snake;
 
-    //Score counter
     let scoreSpan = document.querySelector('#game-info .score');
-    let score = 0;
+    // let score = 0;
 
-    //Buttons and their eventListeners
-    let retryButton = Helpers.createButton('Retry', 'retry');
-    retryButton.addEventListener('click', function(e) {
-        gameOverScreen.hide();
-        score = 0;
-        snake.alive = true;
-        scoreSpan.innerHTML = score;
-
-        snake.destroy();
-        snake = new Snake(matrix, [[3,10], [2,10], [1,10]], 'right');
-    });
-
-    //Screens
-    let gameOverScreen = new Screen(gameScreen, 'Game Over', retryButton); 
-
-    //Create matrix
     let matrix = new Matrix(gameCanvas, 20);
+
+    let retryButton = Helpers.createButton('Retry', 'retry');
+    let newGameButton = Helpers.createButton('New game', 'newGame');
+
+    //Listeners
+    retryButton.addEventListener('click', createGame);
+    newGameButton.addEventListener('click', createGame);
+
     matrix.create();
 
-    //Create foods
-    (new Food(matrix)).randomShow();
-
-    //Create walls
-    (new Wall(matrix, [[5, 2]], 5, 'down')).show();
-    (new Wall(matrix, [[17, 11]], 5, 'down')).show();
-
-    //Create snake
-    let snake = new Snake(matrix, [[3,10], [2,10], [1,10]], 'right');
-    snake.show();
+    //Screens
+    let gameOverScreen = new Screen(gameWrapper, 'Game Over', retryButton); 
+    let mainScreen = new Screen(gameWrapper, 'Snake', newGameButton);   
+    mainScreen.show();  
 
     // Swipe controls
     var swiper = new Swipe(document.querySelector('body'));
@@ -69,20 +55,56 @@ window.onload = function(e) {
     });
 
     //Game timer
-    let timer = setInterval(() => {
-        if(gameOverScreen.isShowed) return;
+    let timer;
 
-        snake.move();
-
-        if (!snake.alive) {
-            gameOverScreen.show();
+    function createGame() {
+        if(snake){
+            resetLevel();
         }
+        createLevel();
 
-        if(snake.meal) {
-            scoreSpan.innerHTML =  ++score;
-            (new Food(matrix)).randomShow();
-            snake.meal = false;
-        }
-    }, gameSpeed);
+        timer = setInterval(() => {
+            if(gameOverScreen.isShowed) return;
+    
+            snake.move();
+    
+            if (!snake.alive) {
+                gameOverScreen.show();
+                clearInterval(timer);
+            }
+    
+            if(snake.meal) {
+                scoreSpan.innerHTML =  ++score;
+                (new Food(matrix)).randomShow();
+                snake.meal = false;
+            }
+        }, gameSpeed);
+
+        mainScreen.hide();
+    }
+
+    function createLevel() {
+        // Create food
+        (new Food(matrix)).randomShow();
+
+        //Create walls
+        (new Wall(matrix, [1, 1], 6, 'down')).show();
+        (new Wall(matrix, [20, 20], 6, 'up')).show();
+
+        snake = new Snake(matrix, [10, 10], 3, 'right');
+        snake.show();
+    }
+
+    function resetLevel() {
+        matrix.destroy();
+        matrix.create();
+
+        gameOverScreen.hide();
+        score = 0;
+        snake.alive = true;
+        scoreSpan.innerHTML = score;
+       
+        snake.destroy();
+    }
 }
 

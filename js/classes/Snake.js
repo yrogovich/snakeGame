@@ -1,11 +1,25 @@
 class Snake extends Element{
-    constructor(matrix, cords, direction = '') {
+    constructor(matrix, cords, length, direction = 'right') {
         super(matrix, cords);
         this.value = 'snake'
         this.direction = direction;
+        this.length = length;
+
         this.newDirection = direction;
-        this.alive = true; 
+        this.alive = false; 
         this.meal = false;
+        
+        this.create();
+    }
+
+    create() {
+        super.create();
+        this.cords = this.cords.reverse();
+    }
+
+    show() {
+        super.show();
+        this.alive = true; 
     }
 
     move() {
