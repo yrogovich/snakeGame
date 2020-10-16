@@ -35,6 +35,8 @@ class Level {
 
       this.score = 0;
       this.snake.alive = true;
+      
       this.snake.destroy();
+      this.snake = new Snake(this.matrix);
   }
 }
