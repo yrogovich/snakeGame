@@ -32,6 +32,10 @@ class Screen {
     }
 
     show() {
+        if(this.hasActive()) {
+            return false; 
+        }
+        
         this.isShowed = true;
         this.screen.classList.add("active");
     }
@@ -39,5 +43,11 @@ class Screen {
     hide() {
         this.isShowed = false;
         this.screen.classList.remove("active");
+    }
+
+    hasActive() {
+        let screens = document.querySelectorAll('.game-screen.active');
+        console.log(screens);
+        return Boolean(screens.length);
     }
 }

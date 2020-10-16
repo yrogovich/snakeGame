@@ -220,9 +220,6 @@ body {
   background-color: rgba(255, 255, 255, 0.6);
   -webkit-transition: .3s;
   transition: .3s;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -233,8 +230,7 @@ body {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  opacity: 0;
-  pointer-events: none;
+  display: none;
 }
 
 .game-screen .title {
@@ -248,8 +244,9 @@ body {
 }
 
 .game-screen.active {
-  opacity: 1;
-  pointer-events: all;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .field {

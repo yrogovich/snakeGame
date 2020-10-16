@@ -2,24 +2,20 @@
 
 window.onload = function(e) {
     // Globals
+    let body = document.querySelector('body');
     let gameWrapper =  document.querySelector('#game-wrapper');
     let gameCanvas = document.querySelector('#game');
     let gameSpeed = 200; 
     let snake;
 
     let scoreSpan = document.querySelector('#game-info .score');
-    let score = 0;
 
     let matrix = new Matrix(gameCanvas, 20);
 
+    // Buttons
     let retryButton = Helpers.createButton('Retry', 'retry');
     let newGameButton = Helpers.createButton('New game', 'newGame');
     let continueButton = Helpers.createButton('Continue', 'continue');
-
-    //Listeners
-    retryButton.addEventListener('click', createGame);
-    newGameButton.addEventListener('click', createGame);
-    continueButton.addEventListener('click', gameContinue);
 
     matrix.create();
 
@@ -29,16 +25,29 @@ window.onload = function(e) {
     let pauseScreen = new Screen(gameWrapper, 'Pause', continueButton);   
     mainScreen.show();  
 
+
+    //Listeners
+    retryButton.addEventListener('click', createGame);
+    newGameButton.addEventListener('click', createGame);
+    continueButton.addEventListener('click', gameContinue);
+    window.addEventListener('blur', gamePause);
+
+    //Game timer
+    let timer;
+    // Level
+    let level = new Level(matrix, snake);
+
     // Swipe controls
-    var swiper = new Swipe(document.querySelector('body'));
-        swiper.onLeft(() => snake.setDirection('left'));
-        swiper.onRight(() => snake.setDirection('right'));
-        swiper.onUp(() => snake.setDirection('up'));
-        swiper.onDown(() => snake.setDirection('down'));
+    let swiper = new Swipe(body);
+        swiper.onLeft(() => level.snake.setDirection('left'));
+        swiper.onRight(() => level.snake.setDirection('right'));
+        swiper.onUp(() => level.snake.setDirection('up'));
+        swiper.onDown(() => level.snake.setDirection('down'));
         swiper.run();
     
     // Keyboard controls
     document.addEventListener('keydown', function(e) {
+        console.log(e);
         let direction;
         switch(e.key) {
             case 'ArrowRight':
@@ -61,78 +70,51 @@ window.onload = function(e) {
                 }
                 break;
         }
-        snake.setDirection(direction);
+        if(level.snake) {
+            level.snake.setDirection(direction);
+        }
     });
 
-    //Game timer
-    let timer;
-
+  
     function gameContinue() {
         pauseScreen.hide();
         timer = setInterval(checkGame, gameSpeed);
     }
+
     function gamePause() {
         pauseScreen.show();
         clearInterval(timer);
     }
 
     function createGame() {
-        if(snake){
-            resetLevel();
+        if(snake != 'undefined'){
+            level.reset();
+            gameOverScreen.hide();
+            scoreSpan.innerHTML = 0;
         }
-        createLevel();
+        if (Screen.isShowed) {
+            return;
+        }
 
+        level.create();
         timer = setInterval(checkGame, gameSpeed);
-
         mainScreen.hide();
     }
 
-    function checkGame() {
-        if(gameOverScreen.isShowed) return;
-    
-        snake.move();
+    function checkGame() {   
+        level.snake.move();
 
-        if (!snake.alive) {
+        if (!level.snake.alive) {
             gameOverScreen.show();
             clearInterval(timer);
         }
 
-        if(snake.meal) {
-            scoreSpan.innerHTML =  ++score;
+        if(level.snake.meal) {
+            level.score += 1;
+            scoreSpan.innerHTML = level.score;
             (new Food(matrix)).randomShow();
-            snake.meal = false;
+            level.snake.meal = false;
         }
-    }
-
-    function createLevel() {
-        snake = new Snake(matrix, [1, 1], 3, 'right');
-        snake.show();
-
-        // Create food
-        (new Food(matrix)).randomShow();
-
-        //Create walls
-        (new Wall(matrix, [6, 8], 5, 'down')).show();
-        (new Wall(matrix, [14, 8], 5, 'down')).show();
-        (new Wall(matrix, [8, 6], 5, 'right')).show();
-        (new Wall(matrix, [8, 14], 5, 'right')).show();
-        (new Wall(matrix, [10, 10])).show();
-        (new Wall(matrix, [3, 3], 2, 'right')).show();
-        (new Wall(matrix, [18, 3], 2, 'left')).show();
-        (new Wall(matrix, [3, 18], 2, 'right')).show();
-        (new Wall(matrix, [18, 18], 2, 'left')).show();
-    }
-
-    function resetLevel() {
-        matrix.destroy();
-        matrix.create();
-
-        gameOverScreen.hide();
-        score = 0;
-        snake.alive = true;
-        scoreSpan.innerHTML = score;
-       
-        snake.destroy();
     }
 }
 

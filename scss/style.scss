@@ -130,13 +130,11 @@ body {
         background-color: rgba($white, .6);
         transition: .3s;
 
-        display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
        
-        opacity: 0;
-        pointer-events: none;
+        display: none;
         .title {
             font-size: 3rem;
         }
@@ -146,8 +144,7 @@ body {
             font-size: 1.6rem;
         }
         &.active {
-            opacity: 1;
-            pointer-events: all;
+            display: flex;
         }
     }
 }

@@ -1,5 +1,5 @@
 class Snake extends Element{
-    constructor(matrix, cords, length, direction = 'right') {
+    constructor(matrix, cords = [1, 1], length = 3, direction = 'right') {
         super(matrix, cords);
         this.value = 'snake'
         this.direction = direction;
