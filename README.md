@@ -1,7 +1,7 @@
 # Snake Game
-Snake on vanilla JavaScript.
+OOP vanilla JavaScript snake.
 
-You can try my game on this link: https://yrogovich.github.io/snakeGame/
+You can try my game by visiting this link: https://yrogovich.github.io/snakeGame/
 
 ## Controls
 **Esc** - pause game.
